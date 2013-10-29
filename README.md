@@ -7,6 +7,7 @@ Task
 Building a rest frontend for flynn. 
 
 `go build go-rest` builds the source code the bin directory will have the excutable.
+
 `go test go-rest -v` does the testing
 
 Curl input to pass
