@@ -10,7 +10,7 @@ func main() {
 	mux.Handle(
 		"POST",
 		"/accounts/keys",
-		tigertonic.Marshaled(keyCreateHandler),
+		tigertonic.Marshaled(PostKeyHandler),
 	)
 	tigertonic.NewServer(":8000", tigertonic.Logged(mux, nil)).ListenAndServe()
 }
