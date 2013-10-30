@@ -14,11 +14,25 @@ import (
 // keyCreateHandler ... This is the handler for go-tigertonic for url
 // /accounts/keys
 func PostKeyHandler(u *url.URL, head http.Header, req *PostKeyRequest) (int, http.Header, *KeyResponse, error) {
-	defResp := &KeyResponse {
-		PublicKey : req.PublicKey,
+	defResp := &KeyResponse{
+		PublicKey: req.PublicKey,
 	}
 	defResp.Populate()
 	return http.StatusOK, nil, defResp, nil
+}
+
+func GetKeyHandler(u *url.URL, head http.Header, _ interface{}) (int, http.Header, *KeyResponse, error) {
+	resp := &KeyResponse{}
+	data := u.Query().Get("id")
+	if len(strings.Split(data, ":")) > 1 {
+		resp.FingerPrint = data
+		resp.PopulateWithFingerPrint()
+	} else {
+		resp.ID = data
+		resp.PopulateWithID()
+	}
+
+	return http.StatusOK, nil, resp, nil
 }
 
 type PostKeyRequest struct {
@@ -55,6 +69,19 @@ func (k *KeyResponse) Populate() {
 	k.ID = "-1"
 
 	k.UpdatedAt = fmt.Sprintln(time.Now())
+}
+
+func (k *KeyResponse) PopulateWithID() {
+	k.CreatedAt = fmt.Sprintln(time.Now())
+	k.UpdatedAt = fmt.Sprintln(time.Now())
+	k.Email = "user@server"
+	k.PublicKey = "pubkey as in ~/.ssh/id_rsa.pub"
+	k.FingerPrint = "aa:bb:cc:dd:ee:ff:gg:hh:ii:kk:ll:mm:nn:oo:pp:qq"
+}
+
+func (k *KeyResponse) PopulateWithFingerPrint() {
+	// Do the same as Populate With ID for now.
+	k.PopulateWithID()
 }
 
 func (k *KeyResponse) cleanFingerPrint(hexStr string) string {
