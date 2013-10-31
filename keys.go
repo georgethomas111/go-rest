@@ -52,6 +52,17 @@ func GetKeyHandler(u *url.URL, head http.Header, _ interface{}) (int, http.Heade
 	return http.StatusOK, nil, resp, nil
 }
 
+func GetKeysHandler(u *url.URL, head http.Header, _ interface{}) (int, http.Header, []*KeyResponse, error) {
+	var RespList []*KeyResponse
+	resp := &KeyResponse{}
+	resp.ID = "data1"
+	RespList = append(RespList, resp)
+	resp1 := &KeyResponse{}
+	resp1.ID = "data2"
+	RespList = append(RespList, resp1)
+	return http.StatusOK, nil, RespList, nil
+}
+
 type PostKeyRequest struct {
 	PublicKey string `json:"public_key"`
 }

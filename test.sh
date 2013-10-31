@@ -1,4 +1,4 @@
-echo -e "\nTests Using curl \n"
+echo -e "\nTests Using curl \n\n"
 echo -e "\n Hitting /accounts/keys\n"
 
 curl -n -X POST http://localhost:8000/accounts/keys \
@@ -10,3 +10,6 @@ curl http://localhost:8000/account/keys/1
 
 echo -e "\n\n Hitting DELETE /accounts/keys/{id}\n"
 curl -n -X DELETE http://localhost:8000/account/keys/tobedeleted
+
+echo -e "\n\n Hitting GET /account/keys\n"
+curl -n -X GET http://localhost:8000/account/keys
