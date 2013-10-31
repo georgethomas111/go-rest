@@ -13,3 +13,17 @@ curl -n -X DELETE http://localhost:8000/account/keys/tobedeleted
 
 echo -e "\n\n Hitting GET /account/keys\n"
 curl -n -X GET http://localhost:8000/account/keys
+
+echo -e "\n\n Hitting POST /apps\n"
+curl -n -X POST http://localhost:8000/apps \
+-H "Content-Type:application/json" \
+-d "{\"name\":\"appName\", \"region\":\"region\", \"stack\":\"stack\"}"
+
+echo -e "\n\n Hitting GET /apps/{id}\n"
+curl -n -X GET http://localhost:8000/apps/mykey
+
+echo -e "\n\n Hitting DELETE /apps/{id}\n"
+curl -n -X DELETE http://localhost:8000/apps/myKey
+
+echo -e "\n\nHitting Get /apps\n"
+curl -n -X GET http://localhost:8000/apps

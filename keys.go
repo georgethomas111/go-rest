@@ -76,7 +76,7 @@ type KeyResponse struct {
 	UpdatedAt   string `json:"updated_at"`
 }
 
-func (k* KeyResponse) Delete() {
+func (k *KeyResponse) Delete() {
 	// Do the actual deletion of k...
 }
 
