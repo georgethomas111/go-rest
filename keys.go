@@ -11,13 +11,30 @@ import (
 	"code.google.com/p/go.crypto/ssh"
 )
 
+// DeleteKeyHandler ... This is the handler for go-tigertonic for url
+// /account/keys/{id}
+func DeleteKeyHandler(u *url.URL, head http.Header, req *PostKeyRequest) (int, http.Header, *KeyResponse, error) {
+	resp := &KeyResponse{}
+	data := u.Query().Get("id")
+	if len(strings.Split(data, ":")) > 1 {
+		resp.FingerPrint = data
+		resp.PopulateWithFingerPrint()
+	} else {
+		resp.ID = data
+		resp.PopulateWithID()
+	}
+	resp.Delete() // Do the actual deletion
+
+	return http.StatusOK, nil, resp, nil
+}
+
 // keyCreateHandler ... This is the handler for go-tigertonic for url
 // /accounts/keys
 func PostKeyHandler(u *url.URL, head http.Header, req *PostKeyRequest) (int, http.Header, *KeyResponse, error) {
 	resp := &KeyResponse{
 		PublicKey: req.PublicKey,
 	}
-	defResp.Populate()
+	resp.Populate()
 	return http.StatusOK, nil, resp, nil
 }
 
@@ -46,6 +63,10 @@ type KeyResponse struct {
 	ID          string `json:"id"` // To be decided
 	PublicKey   string `json:"public_key"`
 	UpdatedAt   string `json:"updated_at"`
+}
+
+func (k* KeyResponse) Delete() {
+	// Do the actual deletion of k...
 }
 
 // Populate ... Populates all the data in keyCreateResp
