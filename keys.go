@@ -14,11 +14,11 @@ import (
 // keyCreateHandler ... This is the handler for go-tigertonic for url
 // /accounts/keys
 func PostKeyHandler(u *url.URL, head http.Header, req *PostKeyRequest) (int, http.Header, *KeyResponse, error) {
-	defResp := &KeyResponse{
+	resp := &KeyResponse{
 		PublicKey: req.PublicKey,
 	}
 	defResp.Populate()
-	return http.StatusOK, nil, defResp, nil
+	return http.StatusOK, nil, resp, nil
 }
 
 func GetKeyHandler(u *url.URL, head http.Header, _ interface{}) (int, http.Header, *KeyResponse, error) {
